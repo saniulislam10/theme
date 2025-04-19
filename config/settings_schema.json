@@ -36,17 +36,31 @@
       },
       {
         "type": "header",
-        "content": "Social media"
+        "content": "Layout"
       },
       {
-        "type": "text",
-        "id": "social_twitter_link",
-        "label": "Twitter link"
+        "type": "range",
+        "id": "max_width",
+        "min": 1000,
+        "max": 1400,
+        "step": 100,
+        "unit": "px",
+        "label": "Max width",
+        "default": 1200
+      },
+      {
+        "type": "header",
+        "content": "Social media"
       },
       {
         "type": "text",
         "id": "social_facebook_link",
         "label": "Facebook link"
+      },
+      {
+        "type": "text",
+        "id": "social_twitter_link",
+        "label": "Twitter link"
       },
       {
         "type": "text",
@@ -57,6 +71,11 @@
         "type": "text",
         "id": "social_pinterest_link",
         "label": "Pinterest link"
+      },
+      {
+        "type": "text",
+        "id": "social_youtube_link",
+        "label": "YouTube link"
       },
       {
         "type": "header",
@@ -71,7 +90,14 @@
       {
         "type": "richtext",
         "id": "footer_newsletter_text",
-        "label": "Newsletter text"
+        "label": "Newsletter text",
+        "default": "<p>Sign up to get the latest on sales, new releases and more …</p>"
+      },
+      {
+        "type": "text",
+        "id": "footer_copyright",
+        "label": "Copyright text",
+        "default": "© 2024, Your Store Name. All rights reserved."
       }
     ]
   }

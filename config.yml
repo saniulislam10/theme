@@ -26,4 +26,10 @@ settings:
   - type: checkbox
     id: show_announcement
     label: Show Announcement
-    default: true 
+    default: true
+
+development:
+  password: your_app_password
+  theme_id: "your_theme_id"
+  store: your-store.myshopify.com
+  directory: ./ 
