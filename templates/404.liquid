@@ -1,0 +1,39 @@
+<div class="error-404" data-section-id="{{ section.id }}" data-section-type="error-404">
+  <div class="error-404__content">
+    <h1 class="error-404__title">
+      {{ 'general.404.title' | t }}
+    </h1>
+    
+    <div class="error-404__message">
+      {{ 'general.404.subtext' | t }}
+    </div>
+    
+    <div class="error-404__search">
+      <form action="{{ routes.search_url }}" method="get" role="search" class="error-404__search-form">
+        <input
+          type="search"
+          name="q"
+          placeholder="{{ 'general.search.placeholder' | t }}"
+          class="error-404__search-input"
+          aria-label="{{ 'general.search.placeholder' | t }}"
+        >
+        <button type="submit" class="error-404__search-button button">
+          {{ 'general.search.submit' | t }}
+        </button>
+      </form>
+    </div>
+    
+    <div class="error-404__links">
+      <a href="{{ routes.root_url }}" class="error-404__link button">
+        {{ 'general.404.link' | t }}
+      </a>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "404",
+  "settings": []
+}
+{% endschema %} 

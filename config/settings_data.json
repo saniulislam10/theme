@@ -1,0 +1,102 @@
+{
+  "current": {
+    "sections": {
+      "announcement-bar": {
+        "type": "announcement-bar",
+        "settings": {
+          "text": "Welcome to our store",
+          "link": "",
+          "background_color": "#000000",
+          "text_color": "#ffffff"
+        }
+      },
+      "hero-banner": {
+        "type": "hero-banner",
+        "settings": {
+          "heading": "Welcome to Our Store",
+          "subheading": "Discover our latest collection",
+          "button_text": "Shop Now",
+          "button_link": "/collections/all",
+          "background_color": "#f4f4f4",
+          "text_color": "#333333",
+          "button_background_color": "#000000",
+          "button_text_color": "#ffffff"
+        }
+      },
+      "featured-collections": {
+        "type": "featured-collections",
+        "settings": {
+          "heading": "Featured Collections",
+          "background_color": "#ffffff",
+          "text_color": "#333333"
+        }
+      },
+      "featured-products": {
+        "type": "featured-products",
+        "settings": {
+          "heading": "Featured Products",
+          "background_color": "#ffffff",
+          "text_color": "#333333"
+        }
+      },
+      "promo-banner": {
+        "type": "promo-banner",
+        "settings": {
+          "heading": "Special Offer",
+          "text": "Get 20% off your first order",
+          "button_text": "Shop Now",
+          "button_link": "/collections/all",
+          "background_color": "#f4f4f4",
+          "text_color": "#333333",
+          "button_background_color": "#000000",
+          "button_text_color": "#ffffff"
+        }
+      },
+      "testimonials": {
+        "type": "testimonials",
+        "settings": {
+          "heading": "What Our Customers Say",
+          "background_color": "#f4f4f4",
+          "text_color": "#333333",
+          "accent_color": "#000000"
+        },
+        "blocks": {
+          "testimonial-1": {
+            "type": "testimonial",
+            "settings": {
+              "content": "This is a sample testimonial. Replace it with your actual customer reviews.",
+              "author": "John Doe",
+              "rating": 5
+            }
+          },
+          "testimonial-2": {
+            "type": "testimonial",
+            "settings": {
+              "content": "Another sample testimonial. Replace it with your actual customer reviews.",
+              "author": "Jane Smith",
+              "rating": 5
+            }
+          }
+        }
+      },
+      "newsletter": {
+        "type": "newsletter",
+        "settings": {
+          "heading": "Subscribe to our newsletter",
+          "text": "Stay updated with our latest products and offers",
+          "placeholder": "Enter your email",
+          "button_text": "Subscribe",
+          "background_color": "#f4f4f4",
+          "text_color": "#333333",
+          "button_background_color": "#000000",
+          "button_text_color": "#ffffff"
+        }
+      }
+    },
+    "theme_info": {
+      "name": "Your Theme Name",
+      "version": "1.0.0",
+      "author": "Your Name"
+    }
+  }
+} 

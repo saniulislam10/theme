@@ -1,0 +1,30 @@
+{% section 'hero-banner' %}
+{% section 'featured-collections' %}
+{% section 'featured-products' %}
+{% section 'promo-banner' %}
+{% section 'testimonials' %}
+{% section 'newsletter' %}
+
+{% schema %}
+{
+  "name": "Home Page",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Page Settings"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Page Title",
+      "default": "Home"
+    },
+    {
+      "type": "text",
+      "id": "meta_description",
+      "label": "Meta Description",
+      "default": "Welcome to our store"
+    }
+  ]
+}
+{% endschema %} 

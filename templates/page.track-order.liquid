@@ -1,0 +1,145 @@
+{%- liquid
+  assign order = customer.orders | where: 'id', order_id | first
+  assign tracking_number = order.shipping_method.tracking_number
+  assign tracking_url = order.shipping_method.tracking_url
+  assign fulfillment_status = order.fulfillment_status
+  assign shipping_address = order.shipping_address
+  assign shipping_method = order.shipping_method
+-%}
+
+<div class="track-order" data-section-id="{{ section.id }}" data-section-type="track-order">
+  <div class="track-order__header">
+    <h1 class="track-order__title">
+      {{ 'customer.track_order.title' | t }}
+    </h1>
+    
+    <div class="track-order__order-number">
+      {{ 'customer.track_order.order_number' | t: number: order.order_number }}
+    </div>
+  </div>
+
+  <div class="track-order__content">
+    <div class="track-order__status">
+      <h2 class="track-order__section-title">
+        {{ 'customer.track_order.status' | t }}
+      </h2>
+      
+      <div class="track-order__status-content">
+        <div class="track-order__status-item">
+          <span class="track-order__status-label">
+            {{ 'customer.track_order.order_status' | t }}
+          </span>
+          <span class="track-order__status-value">
+            {{ order.financial_status_label }}
+          </span>
+        </div>
+        
+        <div class="track-order__status-item">
+          <span class="track-order__status-label">
+            {{ 'customer.track_order.fulfillment_status' | t }}
+          </span>
+          <span class="track-order__status-value">
+            {{ fulfillment_status | capitalize }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="track-order__shipping">
+      <h2 class="track-order__section-title">
+        {{ 'customer.track_order.shipping' | t }}
+      </h2>
+      
+      <div class="track-order__shipping-content">
+        <div class="track-order__shipping-address">
+          <h3 class="track-order__shipping-title">
+            {{ 'customer.track_order.shipping_address' | t }}
+          </h3>
+          <div class="track-order__address">
+            {{ shipping_address | format_address }}
+          </div>
+        </div>
+        
+        <div class="track-order__shipping-method">
+          <h3 class="track-order__shipping-title">
+            {{ 'customer.track_order.shipping_method' | t }}
+          </h3>
+          <div class="track-order__method">
+            {{ shipping_method.title }}
+          </div>
+        </div>
+        
+        {%- if tracking_number != blank -%}
+          <div class="track-order__tracking">
+            <h3 class="track-order__shipping-title">
+              {{ 'customer.track_order.tracking_number' | t }}
+            </h3>
+            <div class="track-order__tracking-number">
+              {%- if tracking_url != blank -%}
+                <a href="{{ tracking_url }}" target="_blank" rel="noopener" class="track-order__tracking-link">
+                  {{ tracking_number }}
+                </a>
+              {%- else -%}
+                {{ tracking_number }}
+              {%- endif -%}
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <div class="track-order__timeline">
+      <h2 class="track-order__section-title">
+        {{ 'customer.track_order.timeline' | t }}
+      </h2>
+      
+      <div class="track-order__timeline-content">
+        <div class="track-order__timeline-item">
+          <div class="track-order__timeline-date">
+            {{ order.created_at | date: "%B %d, %Y %I:%M%p" }}
+          </div>
+          <div class="track-order__timeline-status">
+            {{ 'customer.track_order.timeline.order_placed' | t }}
+          </div>
+        </div>
+        
+        {%- if order.processed_at != blank -%}
+          <div class="track-order__timeline-item">
+            <div class="track-order__timeline-date">
+              {{ order.processed_at | date: "%B %d, %Y %I:%M%p" }}
+            </div>
+            <div class="track-order__timeline-status">
+              {{ 'customer.track_order.timeline.order_processed' | t }}
+            </div>
+          </div>
+        {%- endif -%}
+        
+        {%- if order.fulfillments.size > 0 -%}
+          {%- for fulfillment in order.fulfillments -%}
+            <div class="track-order__timeline-item">
+              <div class="track-order__timeline-date">
+                {{ fulfillment.created_at | date: "%B %d, %Y %I:%M%p" }}
+              </div>
+              <div class="track-order__timeline-status">
+                {{ 'customer.track_order.timeline.order_shipped' | t }}
+              </div>
+            </div>
+          {%- endfor -%}
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+
+  <div class="track-order__footer">
+    <a href="{{ routes.account_url }}" class="track-order__back-to-account button">
+      {{ 'customer.account.return' | t }}
+    </a>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Track Order",
+  "settings": []
+}
+{% endschema %} 

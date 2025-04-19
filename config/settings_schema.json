@@ -1,0 +1,78 @@
+[
+  {
+    "name": "Theme settings",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Colors"
+      },
+      {
+        "type": "color",
+        "id": "primary_color",
+        "label": "Primary color",
+        "default": "#000000"
+      },
+      {
+        "type": "color",
+        "id": "secondary_color",
+        "label": "Secondary color",
+        "default": "#ffffff"
+      },
+      {
+        "type": "header",
+        "content": "Typography"
+      },
+      {
+        "type": "font_picker",
+        "id": "heading_font",
+        "label": "Heading font",
+        "default": "helvetica_n4"
+      },
+      {
+        "type": "font_picker",
+        "id": "body_font",
+        "label": "Body font",
+        "default": "helvetica_n4"
+      },
+      {
+        "type": "header",
+        "content": "Social media"
+      },
+      {
+        "type": "text",
+        "id": "social_twitter_link",
+        "label": "Twitter link"
+      },
+      {
+        "type": "text",
+        "id": "social_facebook_link",
+        "label": "Facebook link"
+      },
+      {
+        "type": "text",
+        "id": "social_instagram_link",
+        "label": "Instagram link"
+      },
+      {
+        "type": "text",
+        "id": "social_pinterest_link",
+        "label": "Pinterest link"
+      },
+      {
+        "type": "header",
+        "content": "Footer"
+      },
+      {
+        "type": "text",
+        "id": "footer_newsletter_heading",
+        "label": "Newsletter heading",
+        "default": "Subscribe to our newsletter"
+      },
+      {
+        "type": "richtext",
+        "id": "footer_newsletter_text",
+        "label": "Newsletter text"
+      }
+    ]
+  }
+] 

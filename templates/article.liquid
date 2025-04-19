@@ -1,0 +1,225 @@
+{%- liquid
+  assign show_date = section.settings.show_date
+  assign show_author = section.settings.show_author
+  assign show_tags = section.settings.show_tags
+  assign show_comments = section.settings.show_comments
+  assign show_share_buttons = section.settings.show_share_buttons
+-%}
+
+<div class="article" data-section-id="{{ section.id }}" data-section-type="article">
+  <article class="article__content">
+    <header class="article__header">
+      <h1 class="article__title">{{ article.title }}</h1>
+      
+      {%- if show_date or show_author -%}
+        <div class="article__meta">
+          {%- if show_date -%}
+            <span class="article__date">
+              {{ article.published_at | date: "%B %d, %Y" }}
+            </span>
+          {%- endif -%}
+          
+          {%- if show_author -%}
+            <span class="article__author">
+              {{ article.author }}
+            </span>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </header>
+
+    {%- if article.image != blank -%}
+      <div class="article__image-wrapper">
+        <img
+          src="{{ article.image | img_url: '1200x' }}"
+          alt="{{ article.image.alt | escape }}"
+          class="article__image"
+          loading="lazy"
+          width="{{ article.image.width }}"
+          height="{{ article.image.height }}"
+        >
+      </div>
+    {%- endif -%}
+
+    <div class="article__body">
+      {{ article.content }}
+    </div>
+
+    {%- if show_tags and article.tags.size > 0 -%}
+      <div class="article__tags">
+        <span class="article__tags-label">{{ 'blogs.article.tags' | t }}:</span>
+        <ul class="article__tags-list">
+          {%- for tag in article.tags -%}
+            <li class="article__tags-item">
+              <a href="{{ blog.url }}/tagged/{{ tag | handle }}" class="article__tags-link">
+                {{ tag }}
+              </a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </div>
+    {%- endif -%}
+
+    {%- if show_share_buttons -%}
+      <div class="article__share">
+        <span class="article__share-label">{{ 'general.social.share_on_facebook' | t }}</span>
+        <a
+          href="https://www.facebook.com/sharer/sharer.php?u={{ shop.url | append: article.url }}"
+          class="article__share-button"
+          target="_blank"
+          rel="noopener"
+        >
+          {% render 'icon-facebook' %}
+        </a>
+        <a
+          href="https://twitter.com/intent/tweet?url={{ shop.url | append: article.url }}&text={{ article.title }}"
+          class="article__share-button"
+          target="_blank"
+          rel="noopener"
+        >
+          {% render 'icon-twitter' %}
+        </a>
+        <a
+          href="https://pinterest.com/pin/create/button/?url={{ shop.url | append: article.url }}&media={{ article.image | img_url: '1200x' }}&description={{ article.title }}"
+          class="article__share-button"
+          target="_blank"
+          rel="noopener"
+        >
+          {% render 'icon-pinterest' %}
+        </a>
+      </div>
+    {%- endif -%}
+
+    {%- if show_comments and blog.comments_enabled? -%}
+      <div class="article__comments">
+        {%- if article.comments_count > 0 -%}
+          <h2 class="article__comments-title">
+            {{ 'blogs.comments.comments_with_count' | t: count: article.comments_count }}
+          </h2>
+          
+          <div class="article__comments-list">
+            {%- paginate article.comments by 5 -%}
+              {%- for comment in article.comments -%}
+                <div class="article__comment">
+                  <div class="article__comment-author">
+                    {{ comment.author }}
+                  </div>
+                  <div class="article__comment-date">
+                    {{ comment.created_at | date: "%B %d, %Y" }}
+                  </div>
+                  <div class="article__comment-content">
+                    {{ comment.content }}
+                  </div>
+                </div>
+              {%- endfor -%}
+              
+              {%- if paginate.pages > 1 -%}
+                <div class="article__comments-pagination">
+                  {%- render 'pagination', paginate: paginate -%}
+                </div>
+              {%- endif -%}
+            {%- endpaginate -%}
+          </div>
+        {%- endif -%}
+
+        <div class="article__comment-form">
+          {%- form 'new_comment', article -%}
+            <h2 class="article__comment-form-title">
+              {{ 'blogs.comments.title' | t }}
+            </h2>
+            
+            {%- if form.errors -%}
+              <div class="article__comment-form-errors">
+                {{ form.errors | default_errors }}
+              </div>
+            {%- endif -%}
+            
+            <div class="article__comment-form-fields">
+              <div class="article__comment-form-field">
+                <label for="CommentAuthor" class="article__comment-form-label">
+                  {{ 'blogs.comments.name' | t }}
+                </label>
+                <input
+                  type="text"
+                  name="comment[author]"
+                  id="CommentAuthor"
+                  class="article__comment-form-input"
+                  value="{{ form.author }}"
+                  autocapitalize="words"
+                >
+              </div>
+              
+              <div class="article__comment-form-field">
+                <label for="CommentEmail" class="article__comment-form-label">
+                  {{ 'blogs.comments.email' | t }}
+                </label>
+                <input
+                  type="email"
+                  name="comment[email]"
+                  id="CommentEmail"
+                  class="article__comment-form-input"
+                  value="{{ form.email }}"
+                  autocorrect="off"
+                  autocapitalize="off"
+                >
+              </div>
+              
+              <div class="article__comment-form-field">
+                <label for="CommentBody" class="article__comment-form-label">
+                  {{ 'blogs.comments.message' | t }}
+                </label>
+                <textarea
+                  name="comment[body]"
+                  id="CommentBody"
+                  class="article__comment-form-textarea"
+                >{{ form.body }}</textarea>
+              </div>
+            </div>
+            
+            <button type="submit" class="article__comment-form-submit button">
+              {{ 'blogs.comments.post' | t }}
+            </button>
+          {%- endform -%}
+        </div>
+      </div>
+    {%- endif -%}
+  </article>
+</div>
+
+{% schema %}
+{
+  "name": "Article",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_date",
+      "label": "Show date",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_author",
+      "label": "Show author",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_tags",
+      "label": "Show tags",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_comments",
+      "label": "Show comments",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_share_buttons",
+      "label": "Show social sharing buttons",
+      "default": true
+    }
+  ]
+}
+{% endschema %} 

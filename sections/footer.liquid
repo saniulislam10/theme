@@ -1,0 +1,209 @@
+<footer class="footer">
+  <div class="footer__content">
+    <div class="footer__column">
+      <h2 class="footer__title">{{ section.settings.column_1_title }}</h2>
+      <ul class="footer__menu">
+        {%- for link in section.settings.column_1_menu.links -%}
+          <li class="footer__menu-item">
+            <a href="{{ link.url }}" class="footer__menu-link">
+              {{ link.title }}
+            </a>
+          </li>
+        {%- endfor -%}
+      </ul>
+    </div>
+
+    <div class="footer__column">
+      <h2 class="footer__title">{{ section.settings.column_2_title }}</h2>
+      <ul class="footer__menu">
+        {%- for link in section.settings.column_2_menu.links -%}
+          <li class="footer__menu-item">
+            <a href="{{ link.url }}" class="footer__menu-link">
+              {{ link.title }}
+            </a>
+          </li>
+        {%- endfor -%}
+      </ul>
+    </div>
+
+    <div class="footer__column">
+      <h2 class="footer__title">{{ section.settings.column_3_title }}</h2>
+      <ul class="footer__menu">
+        {%- for link in section.settings.column_3_menu.links -%}
+          <li class="footer__menu-item">
+            <a href="{{ link.url }}" class="footer__menu-link">
+              {{ link.title }}
+            </a>
+          </li>
+        {%- endfor -%}
+      </ul>
+    </div>
+
+    <div class="footer__column">
+      <h2 class="footer__title">{{ section.settings.column_4_title }}</h2>
+      <div class="footer__newsletter">
+        {%- form 'customer', id: 'FooterNewsletterForm' -%}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <div class="footer__newsletter-form">
+            <input
+              id="NewsletterForm--{{ section.id }}"
+              type="email"
+              name="contact[email]"
+              class="footer__newsletter-input"
+              value="{{ form.email }}"
+              aria-required="true"
+              autocorrect="off"
+              autocapitalize="off"
+              autocomplete="email"
+              {% if form.errors %}
+                autofocus
+                aria-invalid="true"
+                aria-describedby="Newsletter-error--{{ section.id }}"
+              {% elsif form.posted_successfully? %}
+                aria-describedby="Newsletter-success--{{ section.id }}"
+              {% endif %}
+              placeholder="{{ 'newsletter.label' | t }}"
+              required
+            >
+            <button type="submit" class="footer__newsletter-button" name="commit">
+              {{ 'newsletter.button_label' | t }}
+            </button>
+          </div>
+          {%- if form.errors -%}
+            <small class="footer__newsletter-error" id="Newsletter-error--{{ section.id }}">
+              {{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}
+            </small>
+          {%- endif -%}
+          {%- if form.posted_successfully? -%}
+            <h3 class="footer__newsletter-success" id="Newsletter-success--{{ section.id }}">
+              {{ 'newsletter.success' | t }}
+            </h3>
+          {%- endif -%}
+        {%- endform -%}
+      </div>
+
+      <div class="footer__social">
+        {%- if section.settings.show_social -%}
+          <ul class="footer__social-list">
+            {%- if settings.social_twitter_link != blank -%}
+              <li class="footer__social-item">
+                <a href="{{ settings.social_twitter_link }}" class="footer__social-link">
+                  {% render 'icon-twitter' %}
+                </a>
+              </li>
+            {%- endif -%}
+            {%- if settings.social_facebook_link != blank -%}
+              <li class="footer__social-item">
+                <a href="{{ settings.social_facebook_link }}" class="footer__social-link">
+                  {% render 'icon-facebook' %}
+                </a>
+              </li>
+            {%- endif -%}
+            {%- if settings.social_instagram_link != blank -%}
+              <li class="footer__social-item">
+                <a href="{{ settings.social_instagram_link }}" class="footer__social-link">
+                  {% render 'icon-instagram' %}
+                </a>
+              </li>
+            {%- endif -%}
+          </ul>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+
+  <div class="footer__bottom">
+    <div class="footer__copyright">
+      &copy; {{ 'now' | date: '%Y' }}, {{ shop.name | link_to: routes.root_url }}. {{ powered_by_link }}
+    </div>
+    <div class="footer__payment-icons">
+      {%- if section.settings.show_payment_icons -%}
+        {%- unless shop.enabled_payment_types == empty -%}
+          <ul class="footer__payment-list">
+            {%- for type in shop.enabled_payment_types -%}
+              <li class="footer__payment-item">
+                {{ type | payment_type_svg_tag: class: 'footer__payment-icon' }}
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endunless -%}
+      {%- endif -%}
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Column 1"
+    },
+    {
+      "type": "text",
+      "id": "column_1_title",
+      "label": "Heading",
+      "default": "Shop"
+    },
+    {
+      "type": "link_list",
+      "id": "column_1_menu",
+      "label": "Menu",
+      "default": "footer"
+    },
+    {
+      "type": "header",
+      "content": "Column 2"
+    },
+    {
+      "type": "text",
+      "id": "column_2_title",
+      "label": "Heading",
+      "default": "About"
+    },
+    {
+      "type": "link_list",
+      "id": "column_2_menu",
+      "label": "Menu"
+    },
+    {
+      "type": "header",
+      "content": "Column 3"
+    },
+    {
+      "type": "text",
+      "id": "column_3_title",
+      "label": "Heading",
+      "default": "Help"
+    },
+    {
+      "type": "link_list",
+      "id": "column_3_menu",
+      "label": "Menu"
+    },
+    {
+      "type": "header",
+      "content": "Column 4"
+    },
+    {
+      "type": "text",
+      "id": "column_4_title",
+      "label": "Heading",
+      "default": "Newsletter"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_social",
+      "label": "Show social media icons",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_icons",
+      "label": "Show payment icons",
+      "default": true
+    }
+  ]
+}
+{% endschema %} 

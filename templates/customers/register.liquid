@@ -1,0 +1,94 @@
+<div class="customer register">
+  <div class="register__header">
+    <h1 class="register__title">{{ 'customer.register.title' | t }}</h1>
+    <a href="{{ routes.account_login_url }}" class="register__login-link">
+      {{ 'customer.register.login' | t }}
+    </a>
+  </div>
+
+  <div class="register__content">
+    {%- form 'create_customer' -%}
+      {%- if form.errors -%}
+        <div class="register__errors">
+          {{ form.errors | default_errors }}
+        </div>
+      {%- endif -%}
+
+      <div class="register__field">
+        <label for="RegisterForm-FirstName" class="register__label">
+          {{ 'customer.register.first_name' | t }}
+        </label>
+        <input
+          type="text"
+          name="customer[first_name]"
+          id="RegisterForm-FirstName"
+          class="register__input"
+          {% if form.first_name %}
+            value="{{ form.first_name }}"
+          {% endif %}
+          autocomplete="given-name"
+        >
+      </div>
+
+      <div class="register__field">
+        <label for="RegisterForm-LastName" class="register__label">
+          {{ 'customer.register.last_name' | t }}
+        </label>
+        <input
+          type="text"
+          name="customer[last_name]"
+          id="RegisterForm-LastName"
+          class="register__input"
+          {% if form.last_name %}
+            value="{{ form.last_name }}"
+          {% endif %}
+          autocomplete="family-name"
+        >
+      </div>
+
+      <div class="register__field">
+        <label for="RegisterForm-email" class="register__label">
+          {{ 'customer.register.email' | t }}
+        </label>
+        <input
+          type="email"
+          name="customer[email]"
+          id="RegisterForm-email"
+          class="register__input"
+          {% if form.email %}
+            value="{{ form.email }}"
+          {% endif %}
+          spellcheck="false"
+          autocapitalize="off"
+          autocomplete="email"
+          aria-required="true"
+          {% if form.errors contains 'email' %}
+            aria-invalid="true"
+            aria-describedby="RegisterForm-email-error"
+          {% endif %}
+        >
+      </div>
+
+      <div class="register__field">
+        <label for="RegisterForm-password" class="register__label">
+          {{ 'customer.register.password' | t }}
+        </label>
+        <input
+          type="password"
+          name="customer[password]"
+          id="RegisterForm-password"
+          class="register__input"
+          aria-required="true"
+          {% if form.errors contains 'password' %}
+            aria-invalid="true"
+            aria-describedby="RegisterForm-password-error"
+          {% endif %}
+        >
+      </div>
+
+      <button type="submit" class="register__submit button">
+        {{ 'customer.register.submit' | t }}
+      </button>
+    {%- endform -%}
+  </div>
+</div> 

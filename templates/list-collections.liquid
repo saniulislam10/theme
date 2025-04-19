@@ -1,0 +1,76 @@
+{%- liquid
+  assign collections = collections
+  assign columns = section.settings.columns
+  assign heading = section.settings.heading
+  assign subheading = section.settings.subheading
+-%}
+
+<div class="list-collections" data-section-id="{{ section.id }}" data-section-type="list-collections">
+  <div class="list-collections__header">
+    {%- if heading != blank -%}
+      <h1 class="list-collections__heading">{{ heading }}</h1>
+    {%- endif -%}
+    
+    {%- if subheading != blank -%}
+      <div class="list-collections__subheading">{{ subheading }}</div>
+    {%- endif -%}
+  </div>
+
+  <div class="list-collections__grid list-collections__grid--{{ columns }}">
+    {%- for collection in collections -%}
+      <div class="list-collections__item">
+        <a href="{{ collection.url }}" class="list-collections__link">
+          <div class="list-collections__image-wrapper">
+            {%- if collection.image != blank -%}
+              <img
+                src="{{ collection.image | img_url: '600x' }}"
+                alt="{{ collection.image.alt | escape }}"
+                class="list-collections__image"
+                loading="lazy"
+                width="{{ collection.image.width }}"
+                height="{{ collection.image.height }}"
+              >
+            {%- else -%}
+              {{ 'collection-1' | placeholder_svg_tag: 'list-collections__image list-collections__image--placeholder' }}
+            {%- endif -%}
+          </div>
+          
+          <div class="list-collections__content">
+            <h2 class="list-collections__title">{{ collection.title }}</h2>
+            <div class="list-collections__product-count">
+              {{ 'collections.general.product_count' | t: count: collection.all_products_count }}
+            </div>
+          </div>
+        </a>
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "List Collections",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Our Collections"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Subheading"
+    },
+    {
+      "type": "range",
+      "id": "columns",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "label": "Columns",
+      "default": 3
+    }
+  ]
+}
+{% endschema %} 

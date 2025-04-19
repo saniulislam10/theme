@@ -1,0 +1,107 @@
+{%- liquid
+  assign logo_height = section.settings.logo_height
+  assign logo_position = section.settings.logo_position
+  assign navigation_position = section.settings.navigation_position
+  assign transparent_header = false
+  if template == 'index' and section.settings.enable_transparent_header
+    assign transparent_header = true
+  endif
+-%}
+
+<header class="header-wrapper{% if transparent_header %} header-wrapper--transparent{% endif %}" data-section-id="{{ section.id }}" data-section-type="header">
+  <div class="header">
+    <div class="header__logo">
+      {%- if section.settings.logo != blank -%}
+        <a href="{{ routes.root_url }}" class="header__logo-link">
+          <img src="{{ section.settings.logo | img_url: 'master' }}" 
+               alt="{{ section.settings.logo.alt | default: shop.name }}"
+               width="{{ section.settings.logo.width }}"
+               height="{{ section.settings.logo.height }}"
+               loading="lazy">
+        </a>
+      {%- else -%}
+        <a href="{{ routes.root_url }}" class="header__logo-link">
+          {{ shop.name }}
+        </a>
+      {%- endif -%}
+    </div>
+
+    <nav class="header__navigation">
+      <ul class="header__menu">
+        {%- for link in section.settings.menu.links -%}
+          <li class="header__menu-item">
+            <a href="{{ link.url }}" class="header__menu-link">
+              {{ link.title }}
+            </a>
+          </li>
+        {%- endfor -%}
+      </ul>
+    </nav>
+
+    <div class="header__icons">
+      <a href="{{ routes.search_url }}" class="header__icon">
+        {% render 'icon-search' %}
+      </a>
+      <a href="{{ routes.account_url }}" class="header__icon">
+        {% render 'icon-account' %}
+      </a>
+      <a href="{{ routes.cart_url }}" class="header__icon header__icon--cart">
+        {% render 'icon-cart' %}
+        <span class="header__cart-count" data-cart-count>
+          {{ cart.item_count }}
+        </span>
+      </a>
+    </div>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo"
+    },
+    {
+      "type": "range",
+      "id": "logo_height",
+      "min": 20,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Logo height",
+      "default": 40
+    },
+    {
+      "type": "select",
+      "id": "logo_position",
+      "label": "Logo position",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_transparent_header",
+      "label": "Enable transparent header on home page",
+      "default": false
+    }
+  ]
+}
+{% endschema %} 

@@ -1,0 +1,94 @@
+{%- liquid
+  assign formatted_initial_value = gift_card.initial_value | money_without_trailing_zeros
+  assign formatted_initial_value_stripped = formatted_initial_value | strip_html
+-%}
+
+<div class="gift-card" data-section-id="{{ section.id }}" data-section-type="gift-card">
+  <div class="gift-card__content">
+    <h1 class="gift-card__title">
+      {{ 'gift_cards.issued.title' | t }}
+    </h1>
+    
+    <div class="gift-card__image">
+      <img
+        src="{{ 'gift-card/card.jpg' | shopify_asset_url }}"
+        alt="{{ 'gift_cards.issued.subtext' | t }}"
+        class="gift-card__image-img"
+        loading="lazy"
+        width="600"
+        height="400"
+      >
+    </div>
+    
+    <div class="gift-card__amount">
+      <h2 class="gift-card__amount-title">
+        {{ 'gift_cards.issued.remaining_html' | t: balance: gift_card.balance | money }}
+      </h2>
+      <div class="gift-card__amount-value">
+        {{ formatted_initial_value }}
+      </div>
+    </div>
+    
+    <div class="gift-card__code">
+      <div class="gift-card__code-label">
+        {{ 'gift_cards.issued.gift_card_code' | t }}
+      </div>
+      <div class="gift-card__code-value">
+        {{ gift_card.code | format_code }}
+      </div>
+    </div>
+    
+    <div class="gift-card__qr-code">
+      <div id="QrCode" class="gift-card__qr-code-img" data-identifier="{{ gift_card.qr_identifier }}"></div>
+    </div>
+    
+    <div class="gift-card__information">
+      <div class="gift-card__information-item">
+        <p class="gift-card__information-text">
+          {{ 'gift_cards.issued.redeem_text' | t }}
+        </p>
+      </div>
+      
+      {%- if gift_card.pass_url -%}
+        <div class="gift-card__apple-wallet">
+          <a href="{{ gift_card.pass_url }}" class="gift-card__apple-wallet-link">
+            <img
+              src="{{ 'gift-card/add-to-apple-wallet.svg' | shopify_asset_url }}"
+              width="120"
+              height="40"
+              alt="{{ 'gift_cards.issued.add_to_apple_wallet' | t }}"
+              class="gift-card__apple-wallet-img"
+            >
+          </a>
+        </div>
+      {%- endif -%}
+    </div>
+    
+    <div class="gift-card__actions">
+      <a
+        href="{{ shop.url }}"
+        class="gift-card__action button"
+        target="_blank"
+        rel="noopener"
+        aria-describedby="a11y-new-window-message"
+      >
+        {{ 'gift_cards.issued.shop_link' | t }}
+      </a>
+      
+      <button
+        type="button"
+        class="gift-card__action button"
+        onclick="window.print();"
+      >
+        {{ 'gift_cards.issued.print' | t }}
+      </button>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Gift Card",
+  "settings": []
+}
+{% endschema %} 

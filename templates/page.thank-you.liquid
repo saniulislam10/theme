@@ -1,0 +1,173 @@
+{%- liquid
+  assign order = checkout.order
+  assign line_items = order.line_items
+  assign shipping_address = order.shipping_address
+  assign billing_address = order.billing_address
+  assign shipping_method = order.shipping_method
+  assign payment_method = order.payment_method
+-%}
+
+<div class="thank-you" data-section-id="{{ section.id }}" data-section-type="thank-you">
+  <div class="thank-you__header">
+    <h1 class="thank-you__title">
+      {{ 'checkout.thank_you.title' | t }}
+    </h1>
+    
+    <div class="thank-you__order-number">
+      {{ 'checkout.thank_you.order_number' | t: number: order.order_number }}
+    </div>
+    
+    <div class="thank-you__confirmation">
+      {{ 'checkout.thank_you.confirmation' | t: email: order.email }}
+    </div>
+  </div>
+
+  <div class="thank-you__content">
+    <div class="thank-you__order-details">
+      <h2 class="thank-you__section-title">
+        {{ 'checkout.thank_you.order_details' | t }}
+      </h2>
+      
+      <div class="thank-you__order-items">
+        {%- for line_item in line_items -%}
+          <div class="thank-you__order-item">
+            <div class="thank-you__order-item-image">
+              {%- if line_item.image != blank -%}
+                <img
+                  src="{{ line_item.image | img_url: '300x' }}"
+                  alt="{{ line_item.image.alt | escape }}"
+                  class="thank-you__order-item-image"
+                  loading="lazy"
+                  width="{{ line_item.image.width }}"
+                  height="{{ line_item.image.height }}"
+                >
+              {%- else -%}
+                {{ 'product-1' | placeholder_svg_tag: 'thank-you__order-item-image thank-you__order-item-image--placeholder' }}
+              {%- endif -%}
+            </div>
+            
+            <div class="thank-you__order-item-details">
+              <div class="thank-you__order-item-title">
+                {{ line_item.title }}
+              </div>
+              
+              {%- unless line_item.product.has_only_default_variant -%}
+                <div class="thank-you__order-item-variant">
+                  {%- for option in line_item.options_with_values -%}
+                    <div class="thank-you__order-item-option">
+                      <span class="thank-you__order-item-option-name">{{ option.name }}:</span>
+                      <span class="thank-you__order-item-option-value">{{ option.value }}</span>
+                    </div>
+                  {%- endfor -%}
+                </div>
+              {%- endunless -%}
+              
+              <div class="thank-you__order-item-price">
+                {{ line_item.final_price | money }}
+              </div>
+              
+              <div class="thank-you__order-item-quantity">
+                {{ 'checkout.thank_you.quantity' | t: quantity: line_item.quantity }}
+              </div>
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+
+    <div class="thank-you__order-summary">
+      <h2 class="thank-you__section-title">
+        {{ 'checkout.thank_you.order_summary' | t }}
+      </h2>
+      
+      <div class="thank-you__order-totals">
+        <div class="thank-you__order-total">
+          <span class="thank-you__order-total-label">
+            {{ 'checkout.thank_you.subtotal' | t }}
+          </span>
+          <span class="thank-you__order-total-value">
+            {{ order.subtotal_price | money }}
+          </span>
+        </div>
+        
+        {%- if order.shipping_price > 0 -%}
+          <div class="thank-you__order-total">
+            <span class="thank-you__order-total-label">
+              {{ 'checkout.thank_you.shipping' | t }}
+            </span>
+            <span class="thank-you__order-total-value">
+              {{ order.shipping_price | money }}
+            </span>
+          </div>
+        {%- endif -%}
+        
+        {%- if order.tax_price > 0 -%}
+          <div class="thank-you__order-total">
+            <span class="thank-you__order-total-label">
+              {{ 'checkout.thank_you.tax' | t }}
+            </span>
+            <span class="thank-you__order-total-value">
+              {{ order.tax_price | money }}
+            </span>
+          </div>
+        {%- endif -%}
+        
+        <div class="thank-you__order-total thank-you__order-total--grand">
+          <span class="thank-you__order-total-label">
+            {{ 'checkout.thank_you.total' | t }}
+          </span>
+          <span class="thank-you__order-total-value">
+            {{ order.total_price | money }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="thank-you__order-addresses">
+      <div class="thank-you__order-address">
+        <h2 class="thank-you__section-title">
+          {{ 'checkout.thank_you.shipping_address' | t }}
+        </h2>
+        
+        <div class="thank-you__address">
+          {{ shipping_address | format_address }}
+        </div>
+        
+        {%- if shipping_method != blank -%}
+          <div class="thank-you__shipping-method">
+            {{ 'checkout.thank_you.shipping_method' | t: method: shipping_method.title }}
+          </div>
+        {%- endif -%}
+      </div>
+      
+      <div class="thank-you__order-address">
+        <h2 class="thank-you__section-title">
+          {{ 'checkout.thank_you.billing_address' | t }}
+        </h2>
+        
+        <div class="thank-you__address">
+          {{ billing_address | format_address }}
+        </div>
+        
+        {%- if payment_method != blank -%}
+          <div class="thank-you__payment-method">
+            {{ 'checkout.thank_you.payment_method' | t: method: payment_method.title }}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+
+  <div class="thank-you__footer">
+    <a href="{{ routes.root_url }}" class="thank-you__continue-shopping button">
+      {{ 'checkout.thank_you.continue_shopping' | t }}
+    </a>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Thank You",
+  "settings": []
+}
+{% endschema %} 
