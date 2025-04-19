@@ -1,33 +1,3 @@
-name: Modern Ecommerce
-version: 1.0.0
-author: Your Name
-settings:
-  - type: header
-    content: Theme Settings
-  - type: text
-    id: theme_name
-    label: Theme Name
-    default: Modern Ecommerce
-  - type: color
-    id: primary_color
-    label: Primary Color
-    default: "#000000"
-  - type: color
-    id: secondary_color
-    label: Secondary Color
-    default: "#ffffff"
-  - type: image_picker
-    id: logo
-    label: Logo
-  - type: text
-    id: announcement_text
-    label: Announcement Text
-    default: "Welcome to our store!"
-  - type: checkbox
-    id: show_announcement
-    label: Show Announcement
-    default: true
-
 development:
   password: your_app_password
   theme_id: "your_theme_id"
