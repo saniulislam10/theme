@@ -1,42 +1,44 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "current": {
+    "primary_color": "#e27878",
+    "theme_info": {
+      "name": "Your Theme Name",
+      "version": "1.0.0",
+      "author": "Your Name"
+    },
     "sections": {
       "announcement-bar": {
         "type": "announcement-bar",
-        "settings": {
-          "text": "Welcome to our store",
-          "link": "",
-          "background_color": "#000000",
-          "text_color": "#ffffff"
-        }
+        "settings": {}
       },
       "hero-banner": {
         "type": "hero-banner",
         "settings": {
           "heading": "Welcome to Our Store",
-          "subheading": "Discover our latest collection",
+          "subheading": "<p>Discover our latest collection</p>",
           "button_text": "Shop Now",
-          "button_link": "/collections/all",
-          "background_color": "#f4f4f4",
-          "text_color": "#333333",
-          "button_background_color": "#000000",
-          "button_text_color": "#ffffff"
+          "button_link": "/collections/all"
         }
       },
       "featured-collections": {
         "type": "featured-collections",
         "settings": {
-          "heading": "Featured Collections",
-          "background_color": "#ffffff",
-          "text_color": "#333333"
+          "heading": "Featured Collections"
         }
       },
       "featured-products": {
         "type": "featured-products",
         "settings": {
-          "heading": "Featured Products",
-          "background_color": "#ffffff",
-          "text_color": "#333333"
+          "heading": "Featured Products"
         }
       },
       "promo-banner": {
@@ -54,12 +56,6 @@
       },
       "testimonials": {
         "type": "testimonials",
-        "settings": {
-          "heading": "What Our Customers Say",
-          "background_color": "#f4f4f4",
-          "text_color": "#333333",
-          "accent_color": "#000000"
-        },
         "blocks": {
           "testimonial-1": {
             "type": "testimonial",
@@ -77,6 +73,12 @@
               "rating": 5
             }
           }
+        },
+        "settings": {
+          "heading": "What Our Customers Say",
+          "background_color": "#f4f4f4",
+          "text_color": "#333333",
+          "accent_color": "#000000"
         }
       },
       "newsletter": {
@@ -93,10 +95,6 @@
         }
       }
     },
-    "theme_info": {
-      "name": "Your Theme Name",
-      "version": "1.0.0",
-      "author": "Your Name"
-    }
+    "content_for_index": []
   }
-} 
+}
